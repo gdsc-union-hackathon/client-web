@@ -4,6 +4,7 @@ import LottieWrapper from "@/components/common/LottieWrapper";
 import LineFlower from "@/assets/lottieJSON/flower-bouquet.json";
 import { ChangeEvent, FormEvent, useState } from "react";
 import axios from "axios";
+import Link from "next/link";
 
 const SignIn = () => {
     const router = useRouter();
@@ -24,7 +25,12 @@ const SignIn = () => {
             })
             .then((res) => {
                 console.log(res.data);
-                router.push("/");
+                router.push({
+                    pathname: "/",
+                    query: { userId: userId,
+                            status: res.data.status,
+                    },
+                });
             })
             .catch((err) => {
                 console.log(err);
@@ -49,7 +55,12 @@ const SignIn = () => {
                             onChange={onChangeUserId}
                         />
                     </div>
-                    <ChipBtn>로그인</ChipBtn>
+                    <BtnDiv>
+                        <Link href={"/register/signUp"}>
+                            <ChipBtn>회원가입</ChipBtn>
+                        </Link>
+                        <ChipBtn>로그인</ChipBtn>
+                    </BtnDiv>
                 </LoginForm>
             </RigthDiv>
         </TotalWrapper>
@@ -104,6 +115,17 @@ const InputForm = styled.input`
     border: 1px solid #768cff;
     border-radius: 5vw;
     padding-left: 1vw;
+`;
+
+const BtnDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1vw;
+    
+    a {
+        all: unset;
+    }
 `;
 
 const ChipBtn = styled.button`
