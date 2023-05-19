@@ -3,24 +3,23 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 export default function Home() {
+    const router = useRouter();
 
-  const router = useRouter();
+    const userStatus = router.query.status;
+    const userName = router.query.userName;
 
-  const userStatus = router.query.status;
+    useEffect(() => {
+        if (userStatus === "학생") {
+            router.push({
+                pathname: "/student",
+                query: { userName: userName },
+            });
+        } else if (userStatus === "선생님") {
+            router.push("/teacher");
+        } else router.push("/register/signIn");
+    }, [router, userName, userStatus]);
 
-  useEffect(() => {
-    if (userStatus === "학생") {
-      router.push("/student");
-    }
-    else if (userStatus === "선생님") {
-      router.push("/teacher");
-    }
-    else 
-      router.push("/register/signIn");
-
-  },[router, userStatus]);
-
-  /*
+    /*
   useEffect에서 routeQuery를 받아서
   받은 값을 기준으로 if문을 돌린다.
 
@@ -34,10 +33,9 @@ export default function Home() {
     router.push("/register/signIn");
   */
 
-
-  return (
-    <div>
-      <h2>...Loading...</h2>
-    </div>
-  )
+    return (
+        <div>
+            <h2>...Loading...</h2>
+        </div>
+    );
 }

@@ -24,11 +24,12 @@ const SignIn = () => {
                 loginId: userId,
             })
             .then((res) => {
-                console.log(res.data);
+                console.log(res.data.data.status);
                 router.push({
                     pathname: "/",
                     query: { userId: userId,
-                            status: res.data.status,
+                            userName: res.data.data.name,
+                            status: res.data.data.status,
                     },
                 });
             })
